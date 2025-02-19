@@ -3,7 +3,7 @@ import csv
 import os
 import re
 
-app = Flask(hbdkyj)
+app = Flask(__name__)
 app.secret_key = "dlrjsduwnstoddlfdmfdnlgksdnpqtkdslxm"  # 세션 암호화를 위한 키
 app.config["SESSION_PERMANENT"] = False
 
@@ -81,3 +81,6 @@ def authentication():
 def logout():
     session.pop('authenticated', None)  # 로그아웃 시 세션에서 상태 제거
     return render_template("main.html")
+
+def handler(request, *args, **kwargs):
+    return app(request, *args, **kwargs)
