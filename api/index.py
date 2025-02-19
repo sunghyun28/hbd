@@ -3,7 +3,7 @@ import csv
 import os
 import re
 
-app = Flask(__name__)
+app = Flask(hbdkyj)
 app.secret_key = "dlrjsduwnstoddlfdmfdnlgksdnpqtkdslxm"  # 세션 암호화를 위한 키
 app.config["SESSION_PERMANENT"] = False
 
