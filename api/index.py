@@ -82,5 +82,4 @@ def logout():
     session.pop('authenticated', None)  # 로그아웃 시 세션에서 상태 제거
     return render_template("main.html")
 
-def handler(request, *args, **kwargs):
-    return app(request, *args, **kwargs)
+handler = app
