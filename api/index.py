@@ -6,7 +6,7 @@ from flask_static_digest import FlaskStaticDigest
 
 
 app = Flask(__name__, static_folder="static", static_url_path="/static")
-FlaskStaticDigest(app)
+# FlaskStaticDigest(app)
 app.secret_key = "dlrjsduwnstoddlfdmfdnlgksdnpqtkdslxm"
 app.config["SESSION_PERMANENT"] = False
 
