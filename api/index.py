@@ -3,11 +3,11 @@ import csv
 import os
 import re
 
-app = Flask(__name__, template_folder="../templates") 
+app = Flask(__name__, template_folder="../templates", static_folder="../static")
 app.secret_key = "dlrjsduwnstoddlfdmfdnlgksdnpqtkdslxm"
 app.config["SESSION_PERMANENT"] = False
 
-session_initialized = False 
+session_initialized = False
 
 PASSWORD = {20243262, 20241962, 20241965, 20243272, 20241989, 20243264, 20243283, 20241971, 20241972, 20241974, 20241978, 20241984, 20243282, 20241982}
 
@@ -16,34 +16,35 @@ def clear_session_on_restart():
     global session_initialized
     if not session_initialized:
         session.clear()
+        session.permanent = False
         session_initialized = True
 
 @app.route('/')
 def main():
-    authenticated = session.get("authenticated", False)  # 👈 세션 값 저장
+    authenticated = session.get("authenticated", False)
     return render_template('main.html', authenticated=authenticated)
 
 @app.route("/gallery")
 def gallery():
     if not session.get("authenticated"):
         return redirect(url_for("authentication"))
-    image_folder = "static/images/gallery"
+    image_folder = os.path.join(app.static_folder, "images/gallery")
     image_files = [img for img in os.listdir(image_folder) if img.endswith((".jpg", ".png", ".jpeg"))]
     
     image_files = sorted(image_files, key=lambda x: int(os.path.splitext(x)[0]))
 
-    photos = [{"src": f"/{image_folder}/{img}"} for img in image_files]
+    photos = [{"src": url_for('static', filename=f"images/gallery/{img}")} for img in image_files]
 
     return render_template("gallery.html", photos=photos)
 
 def load_messages():
     messages = []
-    with open("static/roll.csv", "r", encoding="utf-8-sig") as file:
+    with open("static/roll.csv", "r", encoding="utf-8", errors="ignore") as file:
         reader = csv.DictReader(file)
         for row in reader:
             messages.append(row)
 
-    messages = sorted(messages, key=lambda x: (not bool(re.match(r"^[가-힣]", x["이름"])), x["이름"].strip()))
+    messages = sorted(messages, key=lambda x: (not re.match(r"^[가-힣]", x["이름"] or ""), x["이름"].strip()))
 
     return messages
 
@@ -72,8 +73,7 @@ def authentication():
 @app.route('/logout')
 def logout():
     session.pop('authenticated', None)
-    return render_template("main.html")
+    return redirect(url_for("main"))
 
 # Vercel에서 Flask 실행을 위한 WSGI 핸들러 설정
-# 여기서 app을 handler로 설정해야 함
 handler = app
