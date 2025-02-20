@@ -6,11 +6,9 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
-# 프로젝트 코드 복사
+# 프로젝트 코드 복사 (static 포함)
 COPY . /app/
-
-# (중요!) static 폴더 강제 생성
-RUN mkdir -p /app/static
+COPY static /app/static  # ✅ static 폴더를 강제로 복사
 
 # Flask 실행
 CMD ["flask", "run", "--host=0.0.0.0"]
