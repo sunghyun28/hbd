@@ -3,7 +3,7 @@ import csv
 import os
 import re
 
-app = Flask(__name__, template_folder=os.path.abspath("templates"))
+app = Flask(__name__, static_folder="static", static_url_path="/static")
 app.secret_key = "dlrjsduwnstoddlfdmfdnlgksdnpqtkdslxm"
 app.config["SESSION_PERMANENT"] = False
 
