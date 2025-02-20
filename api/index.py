@@ -1,11 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, Flask
 import csv
 import os
 import re
 from flask_static_digest import FlaskStaticDigest
 
 
-app = Flask(__name__, static_folder="static", static_url_path="/static")
+app = Flask(__name__, static_folder="../static", template_folder="../templates")
+# static/images/gallery 폴더가 없으면 자동 생성
+gallery_path = "static/images/gallery"
+if not os.path.exists(gallery_path):
+    os.makedirs(gallery_path)
 # FlaskStaticDigest(app)
 app.secret_key = "dlrjsduwnstoddlfdmfdnlgksdnpqtkdslxm"
 app.config["SESSION_PERMANENT"] = False
