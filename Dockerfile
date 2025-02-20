@@ -1,3 +1,6 @@
+# 🚨 기본 이미지 추가 (Python 3.9)
+FROM python:3.9
+
 # 작업 디렉터리 설정
 WORKDIR /app
 
