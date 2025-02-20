@@ -6,9 +6,13 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
-# 프로젝트 코드 복사 (static 포함)
+# static, templates 폴더를 명확하게 복사
+COPY static /app/static
+COPY templates /app/templates
+
+# 프로젝트 코드 복사
 COPY . /app/
-COPY static /app/static  # ✅ static 폴더를 강제로 복사
 
 # Flask 실행
 CMD ["flask", "run", "--host=0.0.0.0"]
+
