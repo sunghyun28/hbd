@@ -3,12 +3,11 @@ WORKDIR /app
 
 # 모든 파일 복사 (templates 포함)
 COPY . /app
-COPY templates /app/templates  # 명확하게 templates 복사
 
-# Flask 실행 시 templates 폴더가 있는지 확인
+# Flask 실행 시 templates 폴더가 있는지 확인하는 코드 추가 가능
 RUN ls -l /app/templates
 
-# 필요한 패키지 설치
+# Flask 및 관련 패키지 설치
 RUN pip install --no-cache-dir flask
 
 # 환경 변수 설정
