@@ -3,7 +3,7 @@ import csv
 import os
 import re
 
-app = Flask(__name__, static_folder="static")
+app = Flask(__name__, static_folder="static", static_url_path="/static")
 app.secret_key = "dlrjsduwnstoddlfdmfdnlgksdnpqtkdslxm"
 app.config["SESSION_PERMANENT"] = False
 
@@ -77,3 +77,10 @@ def logout():
 
 # Vercel에서 Flask 실행을 위한 WSGI 핸들러 설정
 handler = app
+
+from flask import send_from_directory
+
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory(app.static_folder, filename)
+
