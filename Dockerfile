@@ -7,8 +7,8 @@ COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
 # static, templates 폴더를 명확하게 복사
-COPY static /app/static
-COPY templates /app/templates
+COPY static/ /app/static/
+COPY templates/ /app/templates/
 
 # 프로젝트 코드 복사
 COPY . /app/
