@@ -20,7 +20,8 @@ def clear_session_on_restart():
 
 @app.route('/')
 def main():
-    return render_template('main.html', authenticated=session.get("authenticated", False))
+    authenticated = session.get("authenticated", False)  # 👈 세션 값 저장
+    return render_template('main.html', authenticated=authenticated)
 
 @app.route("/gallery")
 def gallery():
